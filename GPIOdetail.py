@@ -53,9 +53,9 @@ class GPIOs:
 
 		
 	def find(self, value, attr='Name'):
-	# 根据属性找到对应的GPIO，并返回一个存取所有符合属性的列表
+	# 根据属性找到对应的GPIO，并返回一个存取所有符合属性的GPIO口细节列表
 		Glist = []
-		for GPIO in self.GPIOlist:
+		for GPIO in self.fGPIOlist:
 			if GPIO[attr]==value:
 				Glist.append(GPIO)
 		
@@ -63,11 +63,12 @@ class GPIOs:
 	
 	def search(self, value, attr='BCM'):
 	# 根据属性找到对应的GPIO， 并返回一个符合属性、值的GPIO
-		for GPIO in self.GPIOlist:
-			if GPIO[attr]==value:
+		for GPIO in self.fGPIOlist:
+			if GPIO.detaildic[attr]==value:
 				return GPIO
 
 class GPIOdetail:
+	# 这是一个用于显示GPIO属性字典的类
     def __init__(self, BCM='', Mode='', V='', wPi='', Physical='', Name=''):
         BCM = BCM.replace(' ', '')
         wPi = wPi.replace(' ', '')
@@ -83,14 +84,14 @@ class GPIOdetail:
         self.Name = Name.replace(' ', '')
         self.Mode = Mode.replace(' ', '')
         self.Physical = eval(Physical.replace(' ',''))
-        
-    def show(self):
-        detaildic = {'BCM': self.BCM,
+        self.detaildic = {'BCM': self.BCM,
                      'Mode': self.Mode,
                      'V': self.V,
                      'wPi': self.wPi,
                      'Name': self.Name,
                      'Physical': self.Physical}
+        
+    def show(self):
         return detaildic
 
 if __name__ == '__main__':
